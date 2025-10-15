@@ -1,0 +1,56 @@
+undo info-center enable
+vlan batch 2 4 6 11
+interface GigabitEthernet0/0/1
+port link-type trunk
+port trunk allow-pass vlan 1 2 4 6
+quit
+interface GigabitEthernet0/0/2
+port link-type trunk
+port trunk allow-pass vlan 1 2 4 6
+quit
+interface GigabitEthernet0/0/3
+port link-type trunk
+port trunk allow-pass vlan 1 2 4 6
+quit
+interface eth-trunk 1
+mode lacp
+max active-linknumber 2
+load-balance src-dst-mac
+quit
+interface GigabitEthernet0/0/4
+eth-trunk 1
+quit
+interface GigabitEthernet0/0/5
+eth-trunk 1
+quit
+interface eth-trunk 1
+port link-type trunk
+port trunk allow-pass vlan 1 2 4 11
+quit
+interface vlanif 2
+ip address 192.1.2.254 24
+quit
+interface vlanif 4
+ip address 192.1.4.254 24
+quit
+interface vlanif 6
+ip address 192.1.6.254 24
+quit
+interface vlanif 11
+ip address 192.1.11.254 24
+quit
+ospf 7
+area 1
+network 192.1.2.0 0.0.0.255
+network 192.1.4.0 0.0.0.255
+network 192.1.6.0 0.0.0.255
+network 192.1.11.0 0.0.0.255
+quit
+quit
+dhcp enable
+interface vlanif 2
+dhcp select interface
+quit
+interface vlanif 4
+dhcp select interface
+quit
