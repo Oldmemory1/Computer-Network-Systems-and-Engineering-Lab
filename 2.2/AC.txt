@@ -1,0 +1,102 @@
+undo info-center enable
+vlan batch 2 3 4 5
+interface GigabitEthernet0/0/1
+port link-type trunk
+port trunk allow-pass vlan 1 to 5
+quit
+interface vlanif 1
+ip address 192.1.1.253 24
+quit
+wlan
+ap-group name apg1
+quit
+ap-group name apg2
+quit
+regulatory-domain-profile name domain
+country-code cn
+quit
+ap-group name apg1
+regulatory-domain-profile domain
+quit
+ap-group name apg2
+regulatory-domain-profile domain
+quit
+quit
+capwap source interface vlanif 1
+wlan
+ap auth-mode mac-auth
+ap-id 1 ap-mac 00e0-fc1a-7f20
+ap-name ap1
+ap-group apg1
+quit
+ap-id 2 ap-mac 00e0-fc09-1880
+ap-name apg2
+ap-group apg1
+quit
+ap-id 3 ap-mac 00e0-fc5f-05e0
+ap-name ap3
+ap-group apg1
+quit
+ap-id 4 ap-mac 00e0-fcb3-3e40
+ap-name ap4
+ap-group apg2
+quit
+ap-id 5 ap-mac 00e0-fc05-41a0
+ap-name ap5
+ap-group apg2
+quit
+security-profile name security1
+security wpa2 psk pass-phrase Aa-12345678901 aes
+quit
+security-profile name security2
+security wpa2 psk pass-phrase Aa-12345678902 aes
+quit
+ssid-profile name ssid1
+ssid 1234561
+quit
+ssid-profile name ssid2
+ssid 1234562
+quit
+ssid-profile name ssid3
+ssid 1234563
+quit
+ssid-profile name ssid4
+ssid 1234564
+quit
+vap-profile name vap1
+forward-mode tunnel
+service-vlan vlan-id 2
+security-profile security1
+ssid-profile ssid1
+quit
+vap-profile name vap2
+forward-mode tunnel
+service-vlan vlan-id 4
+security-profile security2
+ssid-profile ssid2
+quit
+vap-profile name vap3
+forward-mode tunnel
+service-vlan vlan-id 3
+security-profile security1
+ssid-profile ssid3
+quit
+vap-profile name vap 4
+forward-mode tunnel
+service-vlan vlan-id 5
+security-profile security2
+ssid-profile ssid4
+quit
+ap-group name apg1
+vap-profile vap1 wlan 1 radio 0
+vap-profile vap1 wlan 1 radio 1
+vap-profile vap2 wlan 2 radio 0
+vap-profile vap2 wlan 2 radio 1
+quit
+ap-group name apg2
+vap-profile vap3 wlan 3 radio 0
+vap-profile vap3 wlan 3 radio 1
+vap-profile vap4 wlan 4 radio 0
+vap-profile vap4 wlan 4 radio 1
+quit
+quit
