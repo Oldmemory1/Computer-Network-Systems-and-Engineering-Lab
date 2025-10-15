@@ -1,0 +1,14 @@
+undo info-center enable
+vlan batch 2 4 6
+interface GigabitEthernet0/0/1
+port link-type trunk
+port trunk allow-pass vlan 1 2 4
+quit
+interface GigabitEthernet0/0/2
+port link-type trunk
+port trunk allow-pass vlan 1 2 4 6
+quit
+interface Ethernet0/0/1
+port link-type access
+port default vlan 6
+quit
